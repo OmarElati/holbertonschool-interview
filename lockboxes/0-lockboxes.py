@@ -5,15 +5,13 @@
 def canUnlockAll(boxes):
     total_boxes = len(boxes)
     unlocked_boxes = set([0])
-    stack = [0]
+    queue = [0]
 
-    while stack:
-        current_box = stack.pop()
-        if current_box < total_boxes:
-            for key in boxes[current_box]:
-                if key not in unlocked_boxes:
-                    unlocked_boxes.add(key)
-                    stack.append(key)
-                    unlocked_boxes.add(current_box)
+    while queue:
+        current_box = queue.pop(0)
+        for key in boxes[current_box]:
+            if key < total_boxes and key not in unlocked_boxes:
+                unlocked_boxes.add(key)
+                queue.append(key)
 
     return len(unlocked_boxes) == total_boxes
