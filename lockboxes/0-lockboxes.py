@@ -2,14 +2,6 @@
 """method that determines if all the boxes can be opened"""
 
 
-def join(T, R):
-    res = []
-    for e in R:
-        if e < len(T):
-            res += T[e]
-    return res
-
-
 def canUnlockAll(boxes):
     total_boxes = set([0])
     queue = [0]
