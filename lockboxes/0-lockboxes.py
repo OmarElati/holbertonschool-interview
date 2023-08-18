@@ -5,10 +5,10 @@
 def canUnlockAll(boxes):
     total_boxes = len(boxes)
     unlocked_boxes = set([0])
-    stack = [0]  # Use a stack for DFS traversal
+    stack = [0]
 
     while stack:
-        current_box = stack.pop()  # Pop from the end of the list (stack behavior)
+        current_box = stack.pop()
         for key in boxes[current_box]:
             if key not in unlocked_boxes:
                 unlocked_boxes.add(key)
