@@ -9,9 +9,10 @@ def canUnlockAll(boxes):
 
     while stack:
         current_box = stack.pop()
-        for key in boxes[current_box]:
-            if key not in unlocked_boxes:
-                unlocked_boxes.add(key)
-                stack.append(key)
+        if current_box < total_boxes:
+            for key in boxes[current_box]:
+                if key not in unlocked_boxes:
+                    unlocked_boxes.add(key)
+                    stack.append(key)
 
     return len(unlocked_boxes) == total_boxes
