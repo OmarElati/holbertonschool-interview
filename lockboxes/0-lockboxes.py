@@ -14,5 +14,6 @@ def canUnlockAll(boxes):
                 if key not in unlocked_boxes:
                     unlocked_boxes.add(key)
                     stack.append(key)
+                    unlocked_boxes.add(current_box)
 
     return len(unlocked_boxes) == total_boxes
