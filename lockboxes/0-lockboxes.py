@@ -19,7 +19,7 @@ def canUnlockAll(boxes):
         for j in join(boxes, total_boxes[index:]):
             if j not in total_boxes:
                 total_boxes.append(j)
-                index = 1
                 added = True
+        index += 1
 
     return len(total_boxes) == len(boxes)
