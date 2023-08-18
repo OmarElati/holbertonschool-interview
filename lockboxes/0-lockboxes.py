@@ -2,8 +2,8 @@
 
 def canUnlockAll(boxes):
     total_boxes = len(boxes)
-    unlocked_boxes = set([0]) # Start with the first box unloked
-    queue = [0] # Start exploring from the first box
+    unlocked_boxes = set([0])
+    queue = [0]
 
     while queue:
         current_box = queue.pop(0)
