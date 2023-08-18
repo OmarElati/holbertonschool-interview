@@ -1,10 +1,13 @@
 #!/usr/bin/python3
 """method that determines if all the boxes can be opened"""
+
+
 def join(T, R):
     res = []
     for e in R:
         res += T[e]
     return res
+
 
 def canUnlockAll(boxes):
     index = 0
