@@ -5,7 +5,8 @@
 def join(T, R):
     res = []
     for e in R:
-        res += T[e]
+        if e < len(T):
+            res += T[e]
     return res
 
 
