@@ -18,7 +18,6 @@ Note:
 - Invalid log lines will be skipped.
 - Invalid timestamps will be reported as errors.
 """
-
 import sys
 import re
 from collections import defaultdict
