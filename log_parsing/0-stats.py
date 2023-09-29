@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Log parsing - Parses a log of http get request results from stdin to tabulate the total
+log parsing parses a log of http get request results from stdin to tabulate the total
 counts of status codes appearing in each response, and the total file size
 across all requests.
 """
