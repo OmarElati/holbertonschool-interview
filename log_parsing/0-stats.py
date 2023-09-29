@@ -1,6 +1,22 @@
 #!/usr/bin/python3
 """
-Module that parses a log and prints stats to stdout
+Log Parsing Script
+
+This script parses HTTP log lines from stdin and calculates statistics about the log data.
+
+Usage:
+- Input: Log lines are read from stdin, and they should follow a specific format.
+- Output: The script prints the total file size and the count of each HTTP status code.
+
+Log Line Format:
+Each log line should have the format: IP_ADDRESS - [TIMESTAMP] "HTTP_REQUEST" STATUS_CODE FILE_SIZE
+
+Example log line:
+192.168.1.1 - [2023-09-29 15:30:45.123456] "GET /projects/260 HTTP/1.1" 200 12345
+
+Note:
+- Invalid log lines will be skipped.
+- Invalid timestamps will be reported as errors.
 """
 
 import sys
