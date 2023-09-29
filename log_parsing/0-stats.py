@@ -1,34 +1,78 @@
 #!/usr/bin/python3
-""" Script that reads stdin line by line and computes metrics. """
+"""
+Log parsing
+
+Parses a log of HTTP GET request results from stdin to tabulate the total
+counts of status codes appearing in each response, and the total file size
+across all requests.
+
+Example of expected log line input:
+128.230.61.246 - [2017-02-05 23:31:23.258076] \
+"GET /projects/260 HTTP/1.1" 301 292
+
+Fields:
+<IP Address> - [<date>] "<GET request>" <response status code> <file size>
+"""
+
 import sys
 import re
 from collections import defaultdict
+from datetime import datetime
 
-pattern = r'(\d+\.\d+\.\d+\.\d+) - \[([^\]]+)\] "GET /projects/260 HTTP/1\.1" (\d+) (\d+)'
 
-total_file_size = 0
-status_code_counts = defaultdict(int)
-lines_processed = 0
+def parse_log_line(line, line_no, code_counts, total_file_size):
+    """
+    Parses a log line and updates code_counts and total_file_size.
+    """
+    pattern = r'(\S+) - \[(.*?)\] "(.*?)" (\d+) (\d+)'
 
-try:
-    for line in sys.stdin:
-        match = re.match(pattern, line)
-        if match:
-            ip_address, date, status_code, file_size = match.groups()
-            status_code = int(status_code)
-            file_size = int(file_size)
+    match = re.match(pattern, line)
+    if match:
+        ip, timestamp, request, status_code, file_size = match.groups()
+        try:
+            timestamp = timestamp.strip('[]')
+            datetime.strptime(timestamp, '%Y-%m-%d %H:%M:%S.%f')
 
-            total_file_size += file_size
-            status_code_counts[status_code] += 1
-            lines_processed += 1
+            if request == 'GET /projects/260 HTTP/1.1':
+                status_code = int(status_code)
+                file_size = int(file_size)
 
-            if lines_processed % 10 == 0:
-                print(f"File size: {total_file_size}")
-                for code in sorted(status_code_counts.keys()):
-                    print(f"{code}: {status_code_counts[code]}")
+                code_counts[status_code] += 1
+                total_file_size += file_size
 
-except KeyboardInterrupt:
-    print("\nKeyboard interruption detected. Printing current statistics:")
-    print(f"File size: {total_file_size}")
-    for code in sorted(status_code_counts.keys()):
-        print(f"{code}: {status_code_counts[code]}")
+        except ValueError:
+            sys.stderr.write(f"{sys.argv[0]}: {line_no}: Invalid timestamp\n")
+            pass
+
+    else:
+        sys.stderr.write(f"{sys.argv[0]}: {line_no}: Invalid log line\n")
+
+    return line_no, code_counts, total_file_size
+
+def print_log_totals(total_file_size, code_counts):
+    """
+    Prints current totals of file size and status code counts.
+    """
+    print("File size:", total_file_size)
+    for code, count in code_counts.items():
+        if count > 0:
+            print(f"{code}: {count}")
+
+if __name__ == '__main__':
+    line_no = 0
+    total_file_size = 0
+    code_counts = defaultdict(int)
+
+    try:
+        for line in sys.stdin:
+            line_no, code_counts, total_file_size = parse_log_line(
+                line, line_no, code_counts, total_file_size)
+
+            if line_no % 10 == 0:
+                print_log_totals(total_file_size, code_counts)
+
+        print_log_totals(total_file_size, code_counts)
+
+    except KeyboardInterrupt:
+        print_log_totals(total_file_size, code_counts)
+        raise
