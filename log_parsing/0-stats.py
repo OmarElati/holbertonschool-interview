@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Log parsing - Parses a log of HTTP GET request results from stdin to tabulate the total
+Log parsing - Parses a log of http get request results from stdin to tabulate the total
 counts of status codes appearing in each response, and the total file size
 across all requests.
 """
@@ -12,9 +12,6 @@ from datetime import datetime
 
 
 def parse_log_line(line, line_no, code_counts, total_file_size):
-    """
-    Parses a log line and updates code_counts and total_file_size.
-    """
     pattern = r'(\S+) - \[(.*?)\] "(.*?)" (\d+) (\d+)'
 
     match = re.match(pattern, line)
@@ -41,9 +38,6 @@ def parse_log_line(line, line_no, code_counts, total_file_size):
     return line_no, code_counts, total_file_size
 
 def print_log_totals(total_file_size, code_counts):
-    """
-    Prints current totals of file size and status code counts.
-    """
     print("File size:", total_file_size)
     for code, count in code_counts.items():
         if count > 0:
