@@ -20,22 +20,22 @@ def validUTF8(data):
     """
 
     num_bytes = 0
+    binaryMoveLeft7 = 1 << 7
+    binaryMoveLeft6 = 1 << 6
     for byte in data:
+        binaryMove = 1 << 7
         if num_bytes == 0:
-            if byte >> 7 == 0:
-                num_bytes = 0
-            elif byte >> 5 == 6:
-                num_bytes = 1
-            elif byte >> 4 == 14:
-                num_bytes = 2
-            elif byte >> 3 == 30:
-                num_bytes = 3
-            else:
+            while byte & binaryMove:
+                num_bytes += 1
+                binaryMove = binaryMove >> 1
+            if num_bytes == 0:
+                continue
+            if num_bytes == 1 or num_bytes > 4:
                 return False
         else:
-            if byte >> 6 == 2:
-                num_bytes -= 1
-            else:
+            if not (byte & binaryMoveLeft7 and not (byte & binaryMoveLeft6)):
                 return False
-
-    return num_bytes == 0
+        num_bytes -= 1
+    if num_bytes == 0:
+        return True
+    return False
