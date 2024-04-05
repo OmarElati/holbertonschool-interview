@@ -1,22 +1,6 @@
 #!/usr/bin/python3
 """
-Description: The N queens puzzle is a classic problem in chess where N queens
-must be placed on an N×N chessboard such that no two queens threaten each other
-This program aims to solve the N queens problem.
-Usage: nqueens N:
-       If the program is called with an incorrect number
-       of arguments, it prints "Usage: nqueens N" followed
-       by a new line and exits with a status of 1.
-where N must be an integer greater than or equal to 4:
-       If N is not an integer, it prints "N must be a number"
-       followed by a new line and exits with a status of 1.
-       If N is smaller than 4, it prints "N must be at least 4
-       " followed by a new line and exits with a status of 1.
-The program should print every possible solution to the problem:
-       Each solution is printed on a separate line.
-       Format: see example.
-       Solutions do not need to be printed in a specific order.
-You are only allowed to import the sys module.
+N-queen problem
 """
 import sys
 
