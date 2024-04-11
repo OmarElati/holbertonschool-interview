@@ -9,10 +9,15 @@
  */
 avl_t *sorted_array_to_avl(int *array, size_t size)
 {
-	if (array == NULL)
+	avl_t *tree = NULL;
+
+	if (!array || size == 0)
 		return (NULL);
 
-	return (recursive_tree(array, 0, size - 1));
+	tree = recursive_tree(array, 0, (int)size - 1);
+	if (!tree)
+		return (NULL);
+	return (tree);
 }
 
 /**
@@ -23,56 +28,52 @@ avl_t *sorted_array_to_avl(int *array, size_t size)
  */
 avl_t *create_node(int n)
 {
-	avl_t *new_node;
+	avl_t *node = NULL;
 
-	new_node = malloc(sizeof(avl_t));
-	if (new_node == NULL)
+	node = malloc(sizeof(avl_t));
+	if (!node)
 		return (NULL);
-
-	new_node->n = n;
-	new_node->parent = (NULL);
-	new_node->left = (NULL);
-	new_node->right = (NULL);
-
-	return (new_node);
+	node->parent = NULL;
+	node->left = NULL;
+	node->right = NULL;
+	node->n = n;
+	return (node);
 }
 
 /**
  * recursive_tree - builds the AVL tree recursively
- * @array: sorted array to build the tree from
- * @start: starting index of the current subarray
- * @end: ending index of the current subarray
- *
+ * @array: array of integers
+ * @start: starting index
+ * @end: ending index
  * Return: pointer to the root node of the created AVL tree, or NULL on failure
  */
-avl_t *recursive_tree(int *array, size_t start, size_t end)
+avl_t *recursive_tree(int *array, int start, int end)
 {
-	size_t mid;
-	avl_t *left, *right, *parent;
+	avl_t *left = NULL, *right = NULL, *parent = NULL;
+	size_t n = 0;
 
 	if (start > end)
 		return (NULL);
 
-	mid = start + (end - start) / 2;
+	n = (start + end) / 2;
+	left = recursive_tree(array, start, n - 1);
+	right = recursive_tree(array, n + 1, end);
 
-	left = recursive_tree(array, start, mid - 1);
-	right = recursive_tree(array, mid + 1, end);
-
-	parent = create_node(array[mid]);
-	if (parent == NULL)
-	{
-		free(left);
-		free(right);
+	parent = create_node(array[n]);
+	if (!parent)
 		return (NULL);
+
+	if (left)
+	{
+		parent->left = left;
+		left->parent = parent;
 	}
 
-	parent->left = left;
-	if (left != NULL)
-		left->parent = parent;
-
-	parent->right = right;
-	if (right != NULL)
+	if (right)
+	{
+		parent->right = right;
 		right->parent = parent;
+	}
 
 	return (parent);
 }
