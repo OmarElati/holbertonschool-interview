@@ -47,32 +47,32 @@ avl_t *create_node(int n)
  */
 avl_t *recursive_tree(int *array, size_t start, size_t end)
 {
-	size_t mid;
-	avl_t *left, *right, *parent;
+    size_t mid;
+    avl_t *left, *right, *parent;
 
-	if (start > end)
-		return (NULL);
+    if (start > end)
+        return (NULL);
 
-	mid = start + (end - start) / 2;
+    mid = start + (end - start) / 2;
 
-	left = recursive_tree(array, start, mid - 1);
-	right = recursive_tree(array, mid + 1, end);
+    left = recursive_tree(array, start, mid - 1);
+    right = recursive_tree(array, mid + 1, end);
 
-	parent = create_node(array[mid]);
-	if (parent == NULL)
-	{
-		free(left);
-		free(right);
-		return (NULL);
-	}
+    parent = create_node(array[mid]);
+    if (parent == NULL)
+    {
+        free(left);
+        free(right);
+        return (NULL);
+    }
 
-	parent->left = left;
-	if (left != NULL)
-		left->parent = parent;
+    parent->left = left;
+    if (left != NULL)
+        left->parent = parent;
 
-	parent->right = right;
-	if (right != NULL)
-		right->parent = parent;
+    parent->right = right;
+    if (right != NULL)
+        right->parent = parent;
 
-	return (parent);
+    return (parent);
 }
