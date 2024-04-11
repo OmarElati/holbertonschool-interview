@@ -1,5 +1,4 @@
 #include "binary_trees.h"
-#include <stdlib.h>
 
 /**
  * sorted_array_to_avl - builds an AVL tree from a sorted array
@@ -10,10 +9,10 @@
  */
 avl_t *sorted_array_to_avl(int *array, size_t size)
 {
-    if (array == NULL || size == 0)
-        return (NULL);
+	if (array == NULL)
+		return (NULL);
 
-    return (recursive_tree(array, 0, size - 1));
+	return (recursive_tree(array, 0, size - 1));
 }
 
 /**
@@ -24,16 +23,18 @@ avl_t *sorted_array_to_avl(int *array, size_t size)
  */
 avl_t *create_node(int n)
 {
-    avl_t *new_node = malloc(sizeof(avl_t));
-    if (new_node == NULL)
-        return (NULL);
+	avl_t *new_node;
 
-    new_node->n = n;
-    new_node->parent = NULL;
-    new_node->left = NULL;
-    new_node->right = NULL;
+	new_node = malloc(sizeof(avl_t));
+	if (new_node == NULL)
+		return (NULL);
 
-    return (new_node);
+	new_node->n = n;
+	new_node->parent = (NULL);
+	new_node->left = (NULL);
+	new_node->right = (NULL);
+
+	return (new_node);
 }
 
 /**
@@ -46,21 +47,32 @@ avl_t *create_node(int n)
  */
 avl_t *recursive_tree(int *array, size_t start, size_t end)
 {
-    if (start > end)
-        return (NULL);
+	size_t mid;
+	avl_t *left, *right, *parent;
 
-    size_t mid = start + (end - start) / 2;
-    avl_t *parent = create_node(array[mid]);
-    if (parent == NULL)
-        return (NULL);
+	if (start > end)
+		return (NULL);
 
-    parent->left = recursive_tree(array, start, mid - 1);
-    if (parent->left != NULL)
-        parent->left->parent = parent;
+	mid = start + (end - start) / 2;
 
-    parent->right = recursive_tree(array, mid + 1, end);
-    if (parent->right != NULL)
-        parent->right->parent = parent;
+	left = recursive_tree(array, start, mid - 1);
+	right = recursive_tree(array, mid + 1, end);
 
-    return (parent);
+	parent = create_node(array[mid]);
+	if (parent == NULL)
+	{
+		free(left);
+		free(right);
+		return (NULL);
+	}
+
+	parent->left = left;
+	if (left != NULL)
+		left->parent = parent;
+
+	parent->right = right;
+	if (right != NULL)
+		right->parent = parent;
+
+	return (parent);
 }
