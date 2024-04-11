@@ -26,7 +26,7 @@ typedef struct binary_tree_s avl_t;
 
 /* Prototypes */
 avl_t *sorted_array_to_avl(int *array, size_t size);
-avl_t *recursive_tree(int *array, int ben, int end);
+avl_t *recursive_tree(int *array, size_t start, size_t end);
 avl_t *create_node(int n);
 void binary_tree_print(const binary_tree_t *tree);
 
