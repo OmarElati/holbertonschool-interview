@@ -9,7 +9,8 @@ def rain(walls):
     Calculates how many square units of water will be retained after it rains.
 
     Args:
-        walls (list): A list of non-negative integers representing the heights of walls.
+        walls (list): A list of non-negative integers
+                    representing the heights of walls.
 
     Returns:
         int: Total amount of rainwater retained.
