@@ -2,10 +2,10 @@
 
 /**
  * heap_sort - Sorts An Array Fllowing The Heap Sort Algorithm.
- * 
+ *
  * @array: Array Of Integers Sort In Ascending Order.
  * @size: Size Of The Array To Sort.
- * 
+ *
  * Return: Print The Array After Each Time You Swap Two Elements.
  */
 void heap_sort(int *array, size_t size)
