@@ -6,6 +6,6 @@
 
 void print_array(const int *array, size_t size);
 void heap_sort(int *array, size_t size);
-void heapify(int *array, size_t s, size_t root, size_t size);
+void heapify(int *array, size_t n, int i);
 
 #endif /* SORT_H */
