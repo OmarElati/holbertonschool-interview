@@ -32,24 +32,25 @@ void print_subarray(int *array, size_t start, size_t end)
  */
 int advanced_binary_recursive(int *array, size_t start, size_t end, int value)
 {
-	if (start > end)
-		return (-1);
+    size_t mid;
+    if (start > end)
+        return -1;
 
-	print_subarray(array, start, end);
+    print_subarray(array, start, end);
 
-	size_t mid = (start + end) / 2;
+    mid = (start + end) / 2;
 
-	if (array[mid] == value)
-	{
-		if (mid == 0 || array[mid - 1] != value)
-			return (mid);
-		else
-			return (advanced_binary_recursive(array, start, mid, value));
-	}
-	else if (array[mid] < value)
-		return (advanced_binary_recursive(array, mid + 1, end, value));
-	else
-		return (advanced_binary_recursive(array, start, mid - 1, value));
+    if (array[mid] == value)
+    {
+        if (mid == 0 || array[mid - 1] != value)
+            return mid;
+        else
+            return advanced_binary_recursive(array, start, mid, value);
+    }
+    else if (array[mid] < value)
+        return advanced_binary_recursive(array, mid + 1, end, value);
+    else
+        return advanced_binary_recursive(array, start, mid - 1, value);
 }
 
 /**
