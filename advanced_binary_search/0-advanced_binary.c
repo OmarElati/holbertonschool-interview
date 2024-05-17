@@ -9,16 +9,15 @@
  */
 void print_subarray(int *array, size_t start, size_t end)
 {
-	printf("Searching in array: ");
-	for (size_t i = start; i <= end; i++)
-	{
-		printf("%d", array[i]);
-		if (i < end)
-		{
-			printf(", ");
-		}
-	}
-	printf("\n");
+    size_t i;
+    printf("Searching in array: ");
+    for (i = start; i <= end; i++)
+    {
+        printf("%d", array[i]);
+        if (i < end)
+            printf(", ");
+    }
+    printf("\n");
 }
 
 /**
