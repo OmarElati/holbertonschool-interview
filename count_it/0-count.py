@@ -1,12 +1,13 @@
 #!/usr/bin/python3
 """
-recursive function that queries the Reddit API
+Count it!
 """
 from requests import request
 
 
 def generate_dicts(word_list):
-    """Generates the two dic
+    """
+    generate_dicts functions
     """
     count = {k: 0 for k in word_list}
     dup = {}
@@ -18,25 +19,17 @@ def generate_dicts(word_list):
 
 
 def count_words(subreddit, word_list, after="", count={}, dup={}, init=0):
-    """A recursive function that queries the Reddit API,
+    """
+    count_words function
     """
     if not init:
         count, dup = generate_dicts(word_list)
 
     url = "https://api.reddit.com/r/{}/hot?after={}".format(subreddit, after)
     headers = {"User-Agent": "Python3"}
-    response = request("GET", url, headers=headers)
-    
-    if response.status_code != 200:
-        print("Error: Failed to fetch data from Reddit API.")
-        return
-    
+    response = request("GET", url, headers=headers).json()
     try:
-        data = response.json().get('data')
-        if not data:
-            print("No data found in the Reddit API response.")
-            return
-        
+        data = response.get('data')
         top = data.get('children')
         _after = data.get('after')
 
@@ -56,6 +49,5 @@ def count_words(subreddit, word_list, after="", count={}, dup={}, init=0):
                 cnt *= dup[name]
                 if cnt:
                     print('{}: {}'.format(name.lower(), cnt))
-    except Exception as e:
-        print("Error:", e)
+    except Exception:
         return None
