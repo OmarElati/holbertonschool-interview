@@ -1,13 +1,21 @@
 #!/usr/bin/python3
 """
-Count it!
+This script counts occurrences of keywords in Reddit post titles.
 """
 from requests import request
 
 
 def generate_dicts(word_list):
     """
-    generate_dicts functions
+    Generates dictionaries for counting words and handling duplicates.
+    
+    Args:
+        word_list (list): List of words to be counted.
+    
+    Returns:
+        tuple:  A tuple containing two dictionaries:
+                - count: Dictionary to store word counts.
+                - dup: Dictionary to store duplicates of words.
     """
     count = {k: 0 for k in word_list}
     dup = {}
@@ -20,7 +28,15 @@ def generate_dicts(word_list):
 
 def count_words(subreddit, word_list, after="", count={}, dup={}, init=0):
     """
-    count_words function
+    Recursively counts occurrences of given keywords in Reddit post titles.
+
+    Args:
+        subreddit (str): Name of the subreddit to search.
+        word_list (list): List of keywords to count occurrences of.
+        after (str): Token for the next page of results (default "").
+        count (dict): Dictionary to store word counts (default {}).
+        dup (dict): Dictionary to store duplicates of words (default {}).
+        init (int): Flag to indicate initialization (default 0).
     """
     if not init:
         count, dup = generate_dicts(word_list)
