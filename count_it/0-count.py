@@ -25,9 +25,18 @@ def count_words(subreddit, word_list, after="", count={}, dup={}, init=0):
 
     url = "https://api.reddit.com/r/{}/hot?after={}".format(subreddit, after)
     headers = {"User-Agent": "Python3"}
-    response = request("GET", url, headers=headers).json()
+    response = request("GET", url, headers=headers)
+    
+    if response.status_code != 200:
+        print("Error: Failed to fetch data from Reddit API.")
+        return
+    
     try:
-        data = response.get('data')
+        data = response.json().get('data')
+        if not data:
+            print("No data found in the Reddit API response.")
+            return
+        
         top = data.get('children')
         _after = data.get('after')
 
@@ -47,5 +56,6 @@ def count_words(subreddit, word_list, after="", count={}, dup={}, init=0):
                 cnt *= dup[name]
                 if cnt:
                     print('{}: {}'.format(name.lower(), cnt))
-    except Exception:
+    except Exception as e:
+        print("Error:", e)
         return None
