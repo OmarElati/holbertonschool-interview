@@ -8,18 +8,18 @@
  */
 void merge_sort(int *array, size_t size)
 {
-	int *temp;
+    int *temp;
 
-	if (array == NULL || size < 2)
-		return;
+    if (array == NULL || size < 2)
+        return;
 
-	temp = malloc(sizeof(int) * size);
-	if (temp == NULL)
-		return;
+    temp = malloc(sizeof(int) * size);
+    if (temp == NULL)
+        return;
 
-	merge_sort_recursive(array, temp, 0, size - 1);
+    merge_sort_recursive(array, temp, 0, size - 1);
 
-	free(temp);
+    free(temp);
 }
 
 /**
@@ -31,16 +31,16 @@ void merge_sort(int *array, size_t size)
  */
 void merge_sort_recursive(int *array, int *temp, size_t left, size_t right)
 {
-	size_t mid;
+    size_t mid;
 
-	if (left >= right)
-		return;
+    if (left >= right)
+        return;
 
-	mid = left + (right - left) / 2;
+    mid = left + (right - left) / 2;
 
-	merge_sort_recursive(array, temp, left, mid);
-	merge_sort_recursive(array, temp, mid + 1, right);
-	merge(array, temp, left, mid, right);
+    merge_sort_recursive(array, temp, left, mid);
+    merge_sort_recursive(array, temp, mid + 1, right);
+    merge(array, temp, left, mid, right);
 }
 
 /**
@@ -53,30 +53,30 @@ void merge_sort_recursive(int *array, int *temp, size_t left, size_t right)
  */
 void merge(int *array, int *temp, size_t left, size_t mid, size_t right)
 {
-	size_t i = left, j = mid + 1, k = left;
+    size_t i = left, j = mid + 1, k = left;
 
-	printf("Merging...\n[left]: ");
-	print_array(array + left, mid - left + 1);
-	printf("[right]: ");
-	print_array(array + j, right - mid);
+    printf("Merging...\n[left]: ");
+    print_array(array + left, mid - left + 1);
+    printf("[right]: ");
+    print_array(array + j, right - mid);
 
-	while (i <= mid && j <= right)
-	{
-		if (array[i] <= array[j])
-			temp[k++] = array[i++];
-		else
-			temp[k++] = array[j++];
-	}
+    while (i <= mid && j <= right)
+    {
+        if (array[i] <= array[j])
+            temp[k++] = array[i++];
+        else
+            temp[k++] = array[j++];
+    }
 
-	while (i <= mid)
-		temp[k++] = array[i++];
+    while (i <= mid)
+        temp[k++] = array[i++];
 
-	while (j <= right)
-		temp[k++] = array[j++];
+    while (j <= right)
+        temp[k++] = array[j++];
 
-	for (i = left; i <= right; i++)
-		array[i] = temp[i];
+    for (i = left; i <= right; i++)
+        array[i] = temp[i];
 
-	printf("[Done]: ");
-	print_array(array + left, right - left + 1);
+    printf("[Done]: ");
+    print_array(array + left, right - left + 1);
 }
