@@ -12,3 +12,4 @@ void merge(int *array, int *temp, size_t left, size_t mid, size_t right);
 void merge_sort_recursive(int *array, int *temp, size_t left, size_t right);
 
 #endif /* _SORT_H_ */
+
