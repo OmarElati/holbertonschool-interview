@@ -3,7 +3,6 @@
 Defines function that determines the fewest number of coins to make change
 """
 
-
 def makeChange(coins, total):
     """
     Determines the fewest number of coins needed to meet a given total
@@ -22,15 +21,23 @@ def makeChange(coins, total):
     """
     if total <= 0:
         return 0
-    
+
     coins = sorted(coins)
-    dynamic = [float('inf')] * (total + 1)
-    dynamic[0] = 0
-    
-    for i in range(1, total + 1):
+    memo = {}
+
+    def dp(n):
+        if n in memo:
+            return memo[n]
+        if n == 0:
+            return 0
+        min_coins = float('inf')
         for coin in coins:
-            if coin > i:
+            if coin > n:
                 break
-            dynamic[i] = min(dynamic[i], dynamic[i - coin] + 1)
-    
-    return -1 if dynamic[total] == float('inf') else dynamic[total]
+            result = dp(n - coin)
+            if result != -1:
+                min_coins = min(min_coins, result + 1)
+        memo[n] = -1 if min_coins == float('inf') else min_coins
+        return memo[n]
+
+    return dp(total)
