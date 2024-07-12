@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """ Change comes from within """
+import heapq
 
 
 def makeChange(coins, total):
@@ -9,12 +10,24 @@ def makeChange(coins, total):
     """
     if total <= 0:
         return 0
-    
-    dp = [float('inf')] * (total + 1)
-    dp[0] = 0
 
-    for coin in coins:
-        for amount in range(coin, total + 1):
-            dp[amount] = min(dp[amount], dp[amount - coin] + 1)
+    coins.sort(reverse=True)
+    heap = [(0, 0)]
+    visited = set()
 
-    return dp[total] if dp[total] != float('inf') else -1
+    while heap:
+        num_coins, amount = heapq.heappop(heap)
+
+        if amount == total:
+            return num_coins
+
+        if amount > total or (amount, num_coins) in visited:
+            continue
+
+        visited.add((amount, num_coins))
+
+        for coin in coins:
+            new_amount = amount + coin
+            heapq.heappush(heap, (num_coins + 1, new_amount))
+
+    return -1
