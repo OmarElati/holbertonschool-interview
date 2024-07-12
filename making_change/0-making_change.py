@@ -9,7 +9,7 @@ def makeChange(coins, total):
     Determines the fewest number of coins needed to meet a given total
 
     parameters:
-        coins [list or positive ints]:
+        coins [list of positive ints]:
             the values of the coins in your possession
             you can assume you have an infinite number of coins of all values
         total [int]:
@@ -22,17 +22,15 @@ def makeChange(coins, total):
     """
     if total <= 0:
         return 0
-    if len(coins) is 0:
-        return -1
+    
     coins = sorted(coins)
     dynamic = [float('inf')] * (total + 1)
     dynamic[0] = 0
-    for i in range(total + 1):
+    
+    for i in range(1, total + 1):
         for coin in coins:
             if coin > i:
                 break
-            if dynamic[i - coin] != -1:
-                dynamic[i] = min(dynamic[i - coin] + 1, dynamic[i])
-    if dynamic[total] == float('inf'):
-        return -1
-    return dynamic[total]
+            dynamic[i] = min(dynamic[i], dynamic[i - coin] + 1)
+    
+    return -1 if dynamic[total] == float('inf') else dynamic[total]
