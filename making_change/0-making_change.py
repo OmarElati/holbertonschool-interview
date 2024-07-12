@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" 0. Change comes from within """
+""" Change comes from within """
 from collections import deque
 
 
@@ -12,7 +12,7 @@ def makeChange(coins, total):
         return 0
 
     queue = deque([(0, 0)])
-    visited = set()
+    visited = set([0])
 
     while queue:
         current_amount, num_coins = queue.popleft()
