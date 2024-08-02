@@ -2,7 +2,12 @@
 """
 returns the perimeter of the island described in grid
 """
+
+
 def island_perimeter(grid):
+    """
+    function that returns the perimeter of the island described in grid
+    """
     if not grid:
         return 0
 
