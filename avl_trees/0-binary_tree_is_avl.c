@@ -12,24 +12,24 @@
  */
 int is_bst_avl(const binary_tree_t *tree, int min, int max, int *height)
 {
-    int left_height = 0, right_height = 0;
+	int left_height = 0, right_height = 0;
 
-    if (!tree)
-    {
-        *height = 0;
-        return (1);
-    }
+	if (!tree)
+	{
+		*height = 0;
+		return (1);
+	}
 
-    if (tree->n <= min || tree->n >= max)
-        return (0);
+	if (tree->n <= min || tree->n >= max)
+		return (0);
 
-    if (!is_bst_avl(tree->left, min, tree->n, &left_height) ||
-        !is_bst_avl(tree->right, tree->n, max, &right_height))
-        return (0);
+	if (!is_bst_avl(tree->left, min, tree->n, &left_height) ||
+		!is_bst_avl(tree->right, tree->n, max, &right_height))
+		return (0);
 
-    *height = (left_height > right_height ? left_height : right_height) + 1;
+	*height = (left_height > right_height ? left_height : right_height) + 1;
 
-    return (abs(left_height - right_height) <= 1);
+	return (abs(left_height - right_height) <= 1);
 }
 
 /**
@@ -40,10 +40,10 @@ int is_bst_avl(const binary_tree_t *tree, int min, int max, int *height)
  */
 int binary_tree_is_avl(const binary_tree_t *tree)
 {
-    int height = 0;
+	int height = 0;
 
-    if (!tree)
-        return (0);
+	if (!tree)
+		return (0);
 
-    return (is_bst_avl(tree, INT_MIN, INT_MAX, &height));
+	return (is_bst_avl(tree, INT_MIN, INT_MAX, &height));
 }
