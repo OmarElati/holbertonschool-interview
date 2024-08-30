@@ -10,32 +10,22 @@
 
 int regex_match(char const *str, char const *pattern)
 {
-	unsigned int i = 0, j = 0;
+	int dot = 0;
+	int asterisk = 0;
 
-	for (i = 0, j = 0; str[i]; i++, j++)
-	{
-		if (str[i] == pattern[j])
-			continue;
-		else if (pattern[j] == '.')
-			continue;
-		else if (pattern[j] == '*')
-		{
-			if (pattern[j - 1] == '.')
-			{
-				while (pattern[j + 1] != str[i] && str[i])
-					i++;
-			}
-			else
-			{
-				while (pattern[j - 1] == str[i])
-					i++;
-			}
-			i--;
-		}
-		else if (pattern[j + 1] && pattern[j + 1] == '*')
-			i--;
-		else
-			return (0);
-	}
-	return (1);
+	if (!str || !pattern)
+		return (0);
+
+	dot = *str && (*str == *pattern || *pattern == '.');
+	asterisk = *(pattern + 1) == '*';
+
+	if (!*str && !asterisk)
+		return (*pattern ? 0 : 1);
+	else if (dot && asterisk)
+		return (regex_match(str + 1, pattern) || regex_match(str, pattern + 2));
+	else if (dot && !asterisk)
+		return (regex_match(str + 1, pattern + 1));
+	else if (asterisk)
+		return (regex_match(str, pattern + 2));
+	return (0);
 }
