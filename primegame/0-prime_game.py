@@ -6,8 +6,10 @@ of playing the Prime Game.
 
 def isWinner(x, nums):
     """
-    Determines the winner after a certain number of rounds of playing the Prime Game.
-    Maria and Ben take turns choosing primes, and the one who can't choose loses.
+    Determines the winner after a certain
+    number of rounds of playing the Prime Game.
+    Maria and Ben take turns choosing primes,
+    and the one who can't choose loses.
 
     Parameters:
     - x: int - the number of rounds
@@ -41,9 +43,11 @@ def isWinner(x, nums):
     else:
         return None
 
+
 def sieve_of_eratosthenes(n):
     """
-    Generate a boolean list of primes up to a given number n using the Sieve of Eratosthenes.
+    Generate a boolean list of primes up to a given
+    number n using the Sieve of Eratosthenes.
     
     Parameters:
     - n: int - the upper limit for primes
