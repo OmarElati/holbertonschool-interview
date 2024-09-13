@@ -4,6 +4,7 @@ Defines a function that determines the winner after a certain number of rounds
 of playing the Prime Game.
 """
 
+
 def isWinner(x, nums):
     """
     Determines the winner after a certain
@@ -14,7 +15,7 @@ def isWinner(x, nums):
     Parameters:
     - x: int - the number of rounds
     - nums: list of int - list of n values for each round
-    
+
     Returns:
     - Name of the player who won the most rounds ("Maria" or "Ben")
     - None if there's no clear winner
@@ -48,10 +49,10 @@ def sieve_of_eratosthenes(n):
     """
     Generate a boolean list of primes up to a given
     number n using the Sieve of Eratosthenes.
-    
+
     Parameters:
     - n: int - the upper limit for primes
-    
+
     Returns:
     - List where index i is True if i is prime, False otherwise
     """
